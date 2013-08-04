@@ -86,38 +86,47 @@ OpenCPU is a framework for embedded scientific computing and reproducible resear
 In OpenCPU, the analysis/vizualization is completely seperated from other parts of the system or application. OpenCPU has been designed to run on a seperate server, interfaced only through the HTTP API. The client needs no knowledge of R or Latex; OpenCPU defines a mapping between HTTP requests and R function calls which results in a natural RPC-like protocol.  
 
 \begin{verbatim}
-$ curl http://localhost/ocpu/library/stats/R/rnorm/json --data n=3
-[
-  3.05644,
-  0.38511,
-  1.11983
-]
+  $ curl http://localhost/ocpu/library/stats/R/rnorm/json --data n=3
+  [
+    3.05644,
+    0.38511,
+    1.11983
+  ]
 \end{verbatim}
 
-Our philsophy is that R should be used only to do what it is good at: analysis and graphics. The OpenCPU API exposes this functionality though a clean and robust API. Any software program that speaks HTTP call an R function, without the need to generate or parse R code. From there, it is completely up to the client on how to process or present the output. OpenCPU deliberately does not include, suggest or enforce the use of any specific web development language, GUI, etc. This is quite different from some other R/web systems, which ship with built-in templates to generate parameratized out-of-the-box widgets from R code.  \\
+\noindent Our philsophy is that R should be used only to do what it is good at: analysis and graphics. The OpenCPU API exposes this functionality though a clean and robust API. Any software program that speaks HTTP call an R function, without the need to generate or parse R code. From there, it is completely up to the client on how to process or present the output. OpenCPU deliberately does not include, suggest or enforce the use of any specific web development language, GUI, etc. This is quite different from some other R/web systems, which ship with built-in templates to generate parameratized out-of-the-box widgets from R code.  \\
 
 When using OpenCPU, the roles of analyst and web developer are seperated. The analyst implements and documents an R function or script, just as he is used to. The web developer can use his favorite language, tools and frameworks to call this function over HTTP. There is no need for the web developer to learn R, nor does the analyst have to worry about GUIs or web related technicalities. Furthermore, we are not restricted to a limited set of available widgets or panels. OpenCPU leaves it completely up to the web developer(s) and their imagination how and which to design their application. This gives a lot of freedom (and work) in the types of applications that we can build.
 
 \subsection{OpenCPU Apps}
 
+OpenCPU defines a standard way to build and share "apps". An OpenCPU app is an R package which, in addition to the regular contents, ships with some web page(s). These pages interact with the R functions in this package through the OpenCPU API. By convention, these web pages (html/css/js/etc files) are included in the \texttt{/inst/www/} directory of the R source package. This way, OpenCPU apps provide a standardized way to ship standalone R web applications. \\
+
+\noindent Because OpenCPU apps are simply R packages, they are developed, distributed and installed the same way as any other R package. Several example apps are available from the OpenCPU github organization at \href{https://github.com/opencpu}{https://github.com/opencpu}. For example to install the \href{https://github.com/opencpu/gitstats}{gitstats} app, we can use the \texttt{devtools} package:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}(devtools)
+\hlkwd{install_github}(\hlstr{"gitstats"}, \hlstr{"opencpu"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
 
+\noindent The application can then be opened in a browser. For example, if the application was installed on an OpenCPU cloud server, it would be available at \href{http://localhost/ocpu/library/gitstats/www}{http://localhost/ocpu/library/gitstats/www}. \\
 
-\subsection{The single-user server versus the cloud server}
+\noindent To make developing OpenCPU apps easier, a simple Javascript client library is available called \href{https://github.com/jeroenooms/opencpu.js}{opencpu.js}. This library depends on jQuery and  uses \texttt{\$.ajax} to provide javascript wrappers to the OpenCPU API. It is not mandatory to use this javascript library, but it provides a convenient basis for building OpenCPU apps.
 
-
-
-
-
-\section{The OpenCPU single-user server}
+\subsection{The OpenCPU single-user server}
 
 Two versions of OpenCPU are available: a single-user server that builds runs inside an interactive R session, and a cloud server that builds on Apache and Nginx. The single-user server is intended for development and local use only. The latest version can easily be installed from the Github repository:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{library}\hlstd{(devtools)}
-\hlkwd{install_github}\hlstd{(}\hlstr{"opencpu"}\hlstd{,} \hlstr{"jeroenooms"}\hlstd{)}
+\hlkwd{library}(devtools)
+\hlkwd{install_github}(\hlstr{"opencpu"}, \hlstr{"jeroenooms"})
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -127,37 +136,76 @@ Two versions of OpenCPU are available: a single-user server that builds runs ins
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{library}\hlstd{(opencpu)}
+\hlkwd{library}(opencpu)
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
 
-\noindent Because R is single-threaded, the single-user server does not support concurrent requests (but httpuv does a good job in queueing them). Also it does not enforce any security. The single-user server is great for developing apps, that can then be published on the OpenCPU cloud server. 
-
-\subsection{Loading apps in the single-user server}
-
-OpenCPU apps are simply R packages, and can be installed as such. Several apps are available from the OpenCPU github organization at \url{https://github.com/opencpu}. For example, to install the \texttt{gitstats} app, the user would run:
+\noindent Because R is single-threaded, the single-user server does not support concurrent requests (but httpuv does a good job in queueing them). Also it does not enforce any security. The single-user server is great for developing apps, that can later be published on the OpenCPU cloud server. When using the single-user server, we can easily load the apps for local use:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{install_github}\hlstd{(}\hlstr{"gitstats"}\hlstd{,} \hlstr{"opencpu"}\hlstd{)}
-\hlstd{opencpu}\hlopt{$}\hlkwd{browse}\hlstd{(}\hlstr{"gitstats"}\hlstd{)}
+\hlkwd{install_github}(\hlstr{"gitstats"}, \hlstr{"opencpu"})
+opencpu$\hlkwd{browse}(\hlstr{"gitstats"})
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
 
-\noindent The \texttt{opencpu\$browse} function will automatically open the app in the default web-browser. The 
+\noindent The \texttt{opencpu\$browse} function will automatically open the app in the default web browser.  
 
 
+\section{The OpenCPU cloud server}
 
-\section{Cloud Server Installation}
+The OpenCPU cloud server runs on Ubuntu 12.04 (precise) or higher. The OpenCPU system consists of a number of standard Ubuntu installation packages. These are:
 
-\subsection{install and uninstall}
+\begin{itemize}
+ \item \texttt{opencpu} -- Meta package which installs both \texttt{opencpu-server} and \texttt{opencpu-cache}.
+ \item \texttt{opencpu-server} -- The main OpenCPU API server. Depends on \texttt{R} and \texttt{apache2}.
+ \item \texttt{opencpu-cache} --  OpenCPU caching server. Depends on \texttt{nginx}.
+ \item \texttt{opencpu-full} -- Installs \texttt{opencpu} plus many \texttt{texlive} and \texttt{pandoc} packages.
+\end{itemize}
 
-\subsection{deb package structure}
+\subsection{Getting an Ubuntu server}
+
+OpenCPU requires Ubuntu version 12.04 or higher. Any version of Ubuntu will do, e.g. Ubuntu Desktop, Ubuntu Server, Kubuntu, Edubuntu, etc. The preferred way of running OpenCPU is on a clean Ubuntu Server edition. A copy of the Ubuntu Server installation disc ISO can be obtained from the Ubuntu download pages: \\
+
+\url{http://www.ubuntu.com/download/server} \\
+
+\noindent To easiest way to run Ubuntu Server on Amazon EC2 is by using
+one of the official AMI's as provided by the ubuntu team: \\
+
+\url{http://cloud-images.ubuntu.com/raring/current/} \\
+
+\noindent Another possibility is to install a OpenCPU on a virtual Ubuntu server
+inside another OS. For example, the free VMware Player is available for Windows 
+and Linux, and on OSX one can use parallels to run an Ubuntu server. This way
+you can install Ubuntu and OpenCPU safely on top of an existing system. \\
+
+\subsection{Basic OpenCPU installation}
+
+Before installing OpenCPU, make sure the system is up to date:
+
+\begin{verbatim}
+    sudo apt-get update
+    sudo apt-get upgrade
+\end{verbatim}
+To install OpenCPU, first add the OpenCPU repository to the system:
+
+\begin{verbatim}
+    sudo add-apt-repository ppa:opencpu/opencpu-0.8 -y
+    sudo apt-get update
+\end{verbatim}
+We can now go ahead and install the server:
+
+\begin{verbatim}
+    sudo apt-get install opencpu
+\end{verbatim}
+Installation on a clean server might take a while because R and Latex both have many dependencies. After installation is done, we should be able to open a browser and point it to the \texttt{/ocpu} path at server address e.g: \href{http://my.server.com/ocpu}. If you see the welcome page, the installation has succeeded.
+
+
 
 \subsection{support for other systems}
 
