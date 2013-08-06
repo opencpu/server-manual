@@ -320,7 +320,9 @@ which(allpackages[,"Built"] < 3.0)
 
 \section{Testing OpenCPU Installation}
 
-A complete overview and demonstration of the OpenCPU api is available on the website: \href{http://www.opencpu.org}{www.opencpu.org}. Below a few basic examples to illustrate basic functionality and verify that things are working. Also note that OpenCPU ships with a little testing page that can be used to do http requests. The testing page can be found at \url{http://my.server.com/ocpu/test}. \\
+A complete overview and demonstration of the OpenCPU api is available on the website: \href{http://www.opencpu.org}{www.opencpu.org}. Below a few basic examples to illustrate basic functionality and verify that things are working. Also note that OpenCPU ships with a little testing page that can be used to do http requests. The testing page can be found at \url{http://my.server.com/ocpu/test}. 
+
+\subsection*{The package API}
 
 \noindent Basic \texttt{HTTP GET} requests can be performed either by simply opening a url in a web browser, or with a curl command:
 
@@ -350,6 +352,8 @@ The \texttt{-L} flag makes \texttt{curl} follow redirects which is often useful.
 \indent \url{http://localhost/ocpu/library/datasets/R/cars/rda} \\
 
 
+\subsection*{Calling a function}
+
 \noindent Now try calling some functions and scripts using \texttt{HTTP POST}. To do a \texttt{POST} request, we cannot simply open the URL in the browser. Either use the testing webapp, or use \texttt{curl} with the \texttt{-X} or \texttt{-d} flags. For example:
 
 \begin{verbatim}
@@ -374,6 +378,7 @@ The output can then be retrieved using \texttt{HTTP GET}. In this case we would 
 \indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val/rda} \\
 \indent \url{http://localhost/ocpu/tmp/x032a8fee/console} \\
 
+\subsection*{External Repositories}
 
 \noindent The following endpoints represent external repositories. These are only available if they are enabled in the server configuration and if the server has internet access. The API is identical to the one above, with the difference that the \texttt{/library/} has been replaced with some external repository.
 
