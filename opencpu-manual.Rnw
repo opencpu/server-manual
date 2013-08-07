@@ -76,7 +76,7 @@ install_github("gitstats", "opencpu")
 
 \subsection{The OpenCPU single-user server}
 
-Two versions of OpenCPU are available: a single-user server that builds runs inside an interactive R session, and a cloud server that builds on Apache and Nginx. The single-user server is intended for development and local use only. The latest version can easily be installed in R from the Github repository:
+Two versions of OpenCPU are available: a single-user server that runs inside an interactive R session, and a cloud server that builds on Apache and Nginx. The single-user server is intended for development and local use only. The latest version can easily be installed in R from the Github repository:
 
 <<install-opencpu, eval=FALSE>>=
 library(devtools)
