@@ -18,18 +18,19 @@ insert_fun = function(name) {
 \title{The OpenCPU Server Manual}
 \subtitle{Version 0.8-0}
 \author{Jeroen Ooms}
+\date{}
 
 \begin{document}
 
 \maketitle
 
-\noindent The latest version of this document is available at \href{https://github.com/jeroenooms/opencpu-manual}{https://github.com/jeroenooms/opencpu-manual}. To report typos, feedback, bugs, comments, suggestions, etc about this manual, post them in the \href{https://github.com/jeroenooms/opencpu-manual/issues}{issues page} for the repository. 
+\noindent The latest version of this document is available at \href{https://github.com/jeroenooms/opencpu-manual}{https://github.com/jeroenooms/opencpu-manual}. Typos, comments, suggestions about this manual go in the \href{https://github.com/jeroenooms/opencpu-manual/issues}{issues page} for the repo. 
 
 \tableofcontents
 
 \section{What is OpenCPU}
 
-Internet access, public cloud computing, live and open data and scientific super computers are transforming the landscape of data analysis. Researchers increasingly collaborate online by sharing data, code and results. This is a powerful way to learn and teach statistical analysis and at the same time it improves transparency and accessibility of the underlying methods. Moreover, by centralizing computation we can address some scalability challenges and facilitate direct integration of analyses in systems and applications. We expect that providing open and reprodicuble materials on social platforms, in addition to a written report or article, will soon become an integral part of the scientific publication proces. The OpenCPU framework is a first attempt at building a complete system to support such applications. \\
+Internet access, public cloud computing, live and open data and scientific super computers are transforming the landscape of data analysis. Researchers increasingly collaborate by sharing data, code and results online. This is a powerful way to learn and teach statistical analysis and at the same time it improves transparency and accessibility of the underlying methods. Moreover, by centralizing computation we can address some scalability challenges and facilitate direct integration of analyses in systems and applications. We expect that providing open and reprodicuble materials on social platforms, in addition to a written report or article, will soon become an integral part of the scientific publication proces. The OpenCPU framework is a first attempt at building a complete system to support such applications. \\
 
 The OpenCPU framework for embedded scientific computing and reproducible research is based on R, Latex and Pandoc. The OpenCPU server exposes an HTTP API to share and execute scripts, functions and reproducible documents. The system addresses many of the domain specific problems inherent to scientific computing, and abstracts away technicalities behind a well defined intuitive HTTP interface. This provides a foundation for scalable applications with embedded statistical analysis, vizualization and reporting. 
 
@@ -46,23 +47,21 @@ curl http://localhost/ocpu/library/stats/R/rnorm/json --data n=3
   ]
 \end{verbatim}
 
-\noindent Our philsophy is that R should be used only to do what it is good at: analysis and graphics. The OpenCPU API exposes this functionality though a clean and robust API. Any software program that speaks HTTP call an R function, without the need to generate or parse R code. From there, it is completely up to the client on how to process or present the output. OpenCPU deliberately does not include, suggest or enforce the use of any specific web development language, GUI, etc. This is quite different from some other R/web systems, which ship with built-in templates to generate parameratized out-of-the-box widgets from R code.  \\
+\noindent When using OpenCPU, R only needs to do what it was designed for: analysis and graphics. The OpenCPU server exposes this functionality through a clean and reliable API. Any software program that speaks HTTP can call R functions and scripts, without the need to understand, generate or parse R code. From there, it is completely up to the client on how to process or present the output. OpenCPU deliberately does not include, suggest or enforce the use of any specific web development language, GUI, etc. This is quite different from some other R/web systems, which ship with built-in templates to generate parameratized out-of-the-box widgets from R code.  \\
 
-\subsection{Seperation of roles}
+\subsection{Seperating Analysis from Web Development}
 
-When using OpenCPU, the roles of analyst and web developer are seperated. The analyst implements and documents R functions or scripts, just as he is used to. The web developers can use their favorite language, tools and web frameworks to interact with R over HTTP. OpenCPU provides a clean and reliable bridge between these two systems, without imposing additional constraints on either side. There is no need for the web developer to learn R, nor does the analyst have to worry about GUIs or web related technicalities. We are not restricted to a limited set of available widgets or panels that fits the R paradigm. OpenCPU deals with managing R jobs, security, data I/O and other scientific computing challenges. From there, we leave it completely up to the developer(s) and their imagination how to design their application. \\
+OpenCPU clearly seperates the roles of analyst and web developer. The analyst implements and documents R functions or scripts, just as he is used to. The web developers can use their favorite language, tools and web frameworks to interact call these functions over HTTP. OpenCPU provides a bridge between these two systems, without imposing additional constraints on either side. There is no need for the web developer to learn R, nor does the analyst have to worry about GUIs or web related technicalities. We are not restricted to a limited set of available widgets or panels that fits the R paradigm. OpenCPU manages incoming requests, security, resource allocation, data I/O and other computing technicalities. From there, we leave it completely up to the developer(s) and their imagination how to design their application. \\
 
-Emphasis in the OpenCPU design is on reliability, simplicity and maintainability in order to develop scalable production ready software. The clean seperation of statistical computing from the other parts of the system results in well organized applications and makes collaboration within a team of statisticians and developers easier than when the two parts are tightly intertwined. Because OpenCPU layers on HTTP, we can leverage existing technology (cache-control, https, load balancing, etc, etc). Finally, the clean API defintion should make it relatively easy to gracefully extend, reimplement or replace parts of the system in the future.
+Emphasis in the OpenCPU design is on reliability, simplicity and maintainability in order to develop scalable production ready software. The clean seperation of statistical computing from the other parts of the system results in well organized applications and makes collaboration within a team of statisticians and developers easier than when the two parts are tightly intertwined. Because OpenCPU layers on HTTP, we can leverage existing technology (cache-control, https, load balancing, etc, etc). Finally, the API definition makes it possible to gracefully extend, reimplement or replace parts of the system in the future.
 
 \subsection{OpenCPU is really open}
 
-The design of OpenCPU has been driven by the paradigms of open-source, contributed code and reproducibile research which are central to scientific computing. This is where the design of OpenCPU deviates from a web development frameworks in other languages. A client can call any script or function from any package and source code of these resources is always public readable. In unix analogy: any user has \texttt{r-x} access on all R code installed on the system. Furthermore, OpenCPU does not restrict users to some predefined set of functionality: instead, all users are explicitly allowed to store and execute custom code on the server. OpenCPU wants users to play, share, run, produce and reproduce results with each other.\\
+The design of OpenCPU has been driven by the paradigms of open-source, contributed code and reproducibile research which are central to scientific computing. This is where the design of OpenCPU deviates from a web development frameworks in other languages. A client can call any script or function from any package and also the source code of these resources is always readable. In unix analogy: any user has \texttt{r-x} access on all R code on the system. Furthermore, OpenCPU does not restrict users to some predefined set of functionality: instead, all users are explicitly allowed to store and execute custom code on the server. OpenCPU wants users to play, share, run, produce and reproduce results with each other.\\
 
 For these reasons, OpenCPU takes a different approach to security than many other frameworks. OpenCPU uses AppArmor: a security module in the Linux kernel, to enforce security policies on a by-process level. These security restrictions make it possible to allow for arbitrary code execution, without potentially compromising the system. The policies are completely customisable, and section \ref{security} talks a bit more on security and AppArmor. \\
 
-However, even though the system is designed to be open, it is not mandatory to use it that way. It is perfectly fine to employ OpenCPU solely as a reliable computational back-end inside some larger system or application, similar to e.g. a database server. In such a design, the users would not be interacting directly with the OpenCPU server, and can only use functionality exposed in your application layer.
-
-
+However, even though the system is designed to be open, it is not mandatory to use it that way. It is perfectly fine to employ OpenCPU solely as a reliable computational back-end inside some larger system or application, similar to e.g. a database server. In such a design, the users do not interact directly with the OpenCPU server, and can only use functionality exposed in your application layer.
 
 \subsection{OpenCPU Apps}
 
@@ -163,7 +162,7 @@ Alternatively, to install only the cache server:
 \begin{verbatim}
   sudo apt-get install opencpu-cache
 \end{verbatim}
-Note that installing just \texttt{opencpu-cache} is only useful in combination with another server running \texttt{opencpu-server}. Some additional configuration if needed to make the cache server proxy to another server that is not localhost. \\
+Note that installing just \texttt{opencpu-cache} is only useful in combination with another server running \texttt{opencpu-server}. This is how you would set up a load-balancer. Some additional configuration if needed to make the cache server proxy to OpenCPU servers other than localhost. \\
 
 Finally, to get install OpenCPU together with a lot of other potentially useful things:
 
@@ -287,6 +286,169 @@ One nice way to debug a security profile is by monitoring the \texttt{kern.log} 
 \end{verbatim}
 If any R package or process called from OpenCPU attempts to do something that is not allowed in the current security profile, a line containing \texttt{DENIED} is printed to \texttt{kern.log}.
 
+\section{Testing the OpenCPU API}
+
+A complete overview and demonstration of the OpenCPU api is available on the website: \href{http://www.opencpu.org}{www.opencpu.org}. Below a few basic examples to illustrate basic functionality and verify that things are working. Also note that OpenCPU ships with a little testing page that can be used to do http requests. The testing page can be found at \url{http://my.server.com/ocpu/test}. 
+
+\subsection{Using Curl to test}
+
+
+\noindent Basic \texttt{HTTP GET} requests can be performed either by simply opening a url in a web browser, or with a curl command:
+
+\begin{verbatim}
+  curl -L http://my.server.com/ocpu/library/
+\end{verbatim}
+The \texttt{-L} flag makes \texttt{curl} follow redirects which is often useful. In addition you can add the \texttt{-v} flag for more verbose output which includes headers:
+\begin{verbatim}
+  curl -L -v http://my.server.com/ocpu/library/
+\end{verbatim}
+
+\noindent To perform a \texttt{HTTP POST} in curl, either use the \texttt{-X POST} or \texttt{-d [args]} flag. For example:
+
+\begin{verbatim}
+  curl http://localhost/ocpu/library/utils/R/sessionInfo -X POST
+  curl http://localhost/ocpu/library/stats/R/rnorm -d n=10\&mean=100
+\end{verbatim}
+
+\subsection{Reading package objects, manuals and files}
+
+\noindent The following endpoints can be accessed using \texttt{HTTP GET}:\\
+
+\indent \url{http://localhost/ocpu/test} \\
+\indent \url{http://localhost/ocpu/library} \\
+\indent \url{http://localhost/ocpu/library/stats/R} \\
+\indent \url{http://localhost/ocpu/library/stats/R/rnorm} \\
+\indent \url{http://localhost/ocpu/library/stats/man} \\
+\indent \url{http://localhost/ocpu/library/stats/man/rnorm/text} \\
+\indent \url{http://localhost/ocpu/library/stats/man/rnorm/html} \\
+\indent \url{http://localhost/ocpu/library/stats/man/rnorm/pdf} \\
+\indent \url{http://localhost/ocpu/library/datasets} \\
+\indent \url{http://localhost/ocpu/library/datasets/R/cars} \\
+\indent \url{http://localhost/ocpu/library/datasets/R/cars/json} \\
+\indent \url{http://localhost/ocpu/library/datasets/R/cars/csv} \\
+\indent \url{http://localhost/ocpu/library/datasets/R/cars/tab} \\
+\indent \url{http://localhost/ocpu/library/datasets/R/cars/rda} \\
+
+\noindent Appart from R objects and manuals, you can also just access static files from any package: \\
+
+\indent \url{http://localhost/ocpu/library/knitr/examples/} \\
+\indent \url{http://localhost/ocpu/library/knitr/examples/knitr-minimal.Rnw} \\
+\indent \url{http://localhost/ocpu/library/knitr/doc/knitr-intro.R} \\
+\indent \url{http://localhost/ocpu/library/brew/example1.brew} \\
+\indent \url{http://localhost/ocpu/library/devtools/NEWS} \\
+\indent \url{http://localhost/ocpu/library/devtools/DESCRIPTION} 
+
+
+\subsection{Calling a function}
+
+\noindent Performing a \texttt{HTTP POST} on a function results in a function call where the http request arguments are mapped to the function call. In OpenCPU, a successful \texttt{POST} requests usually returns a \texttt{HTTP 201} status, and the response body contains the locations of the output data:
+
+\begin{verbatim}
+  curl http://localhost/ocpu/library/stats/R/rnorm -d n=10\&mean=100
+  <
+  < /ocpu/tmp/x032a8fee/R/.val
+  < /ocpu/tmp/x032a8fee/stdout
+  < /ocpu/tmp/x032a8fee/source
+  < /ocpu/tmp/x032a8fee/console
+  < /ocpu/tmp/x032a8fee/info
+\end{verbatim}
+The output can then be retrieved using \texttt{HTTP GET}. In this case we would get: \\
+
+\indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val} \\
+\indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val/json} \\
+\indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val/ascii} \\
+\indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val/rda} \\
+\indent \url{http://localhost/ocpu/tmp/x032a8fee/console} 
+
+\subsection{Executing a Script}
+
+Besides calling a function, the \texttt{HTTP POST} method can also be used to execute a script. The script is executed according to it's file extention. Currently the following extensions are supported: \texttt{R} (Rscript), \texttt{Rnw}, \texttt{Rmd} (knitr), \texttt{brew} (brew), \texttt{tex} (latex), \texttt{md} (pandoc):
+
+\begin{verbatim}
+  curl -X POST http://localhost/ocpu/library/knitr/examples/knitr-minimal.Rnw
+  curl -X POST http://localhost/ocpu/library/knitr/examples/knitr-minimal.Rmd
+  curl -X POST http://localhost/ocpu/library/knitr/doc/knitr-intro.R
+  curl -X POST http://localhost/ocpu/library/brew/example1.brew
+\end{verbatim}
+
+\noindent In contrast to a function, a script has no formal arguments. Instead, the \texttt{HTTP POST} arguments can be passed to the script interpreter. For example, when calling a \texttt{brew} script, we can pass a value for the \href{https://www.rforge.net/doc/packages/brew/brew.html}{output} argument in brew (e.g. to send the output stream to a specific file), and \texttt{Rmd}/\texttt{md} files have a \href{https://www.rforge.net/doc/packages/knitr/pandoc.html}{format} argument to specify the pandoc output format:
+
+\begin{verbatim}
+  curl http://localhost/ocpu/library/knitr/examples/knitr-minimal.Rmd -d format=docx
+  curl http://localhost/ocpu/library/knitr/examples/knitr-minimal.Rmd -d format=odt
+  curl http://localhost/ocpu/library/knitr/examples/knitr-minimal.Rmd -d format=html
+  curl http://localhost/ocpu/library/brew/example1.brew -d output=out.txt
+\end{verbatim}
+
+
+\subsection{External Repository API's}
+
+\noindent If the OpenCPU cloud server has direct access to the internet, it also provides access packages and/or scripts from external repositories, such as CRAN or Github. This is convenient for development: package authors and users can test and use OpenCPU apps without the need for an administrator to install packages on the server. Note that the administrator can easily disable these features so they might not be available on every OpenCPU server.\\
+
+When a client requests a package from an external repository which is not already installed on the server, OpenCPU will attempt to install the package on the fly. For this reason, the first request might take quite a while. Also the request will fail if the package installation fails (for example due to missing dependencies). But once the package has been successfully installed, it will behave just as any other package on the server. \\
+
+For performance reasons, the current implementation updates packages from external no more than once per 24h. So changes that were recently pushed to Github might not immediately be refelected by the OpenCPU server.
+
+\subsubsection*{CRAN}
+
+The \texttt{/ocpu/cran/:package/} API interfaces to packages which are \emph{current} on \href{http://cran.r-project.org/}{CRAN}: \\
+
+\indent \url{http://localhost/ocpu/cran/} \\
+\indent \url{http://localhost/ocpu/cran/plyr} \\
+\indent \url{http://localhost/ocpu/cran/plyr/R} \\
+\indent \url{http://localhost/ocpu/cran/plyr/R/ldply} \\
+\indent \url{http://localhost/ocpu/cran/plyr/man} \\
+\indent \url{http://localhost/ocpu/cran/plyr/man/ldply} \\
+\indent \url{http://localhost/ocpu/cran/plyr/man/ldply/html} \\
+\indent \url{http://localhost/ocpu/cran/plyr/man/ldply/pdf} 
+
+\subsubsection*{Github}
+
+The \texttt{/ocpu/github/:user/:package/} API interfaces to \textbf{packages} which are the current \texttt{master} branch in a Github user repository: \\
+
+\indent \url{http://localhost/ocpu/github/hadley/} \\
+\indent \url{http://localhost/ocpu/github/hadley/plyr} \\
+\indent \url{http://localhost/ocpu/github/hadley/plyr/R} \\
+\indent \url{http://localhost/ocpu/github/hadley/plyr/R/ldply} \\
+\indent \url{http://localhost/ocpu/github/hadley/plyr/man/ldply} 
+
+\subsubsection*{Gist}
+
+The \texttt{/ocpu/gist/:user/:gistid/} API interfaces to \textbf{files} (scripts, documents) in a repository from a certain Gist user. The \texttt{/ocpu/gist} API does \textbf{not support R packages}. Just files: \\
+
+\indent \url{http://localhost/ocpu/gist/hadley/} \\
+\indent \url{http://localhost/ocpu/gist/hadley/5721744} \\
+\indent \url{http://localhost/ocpu/gist/hadley/5721744/html.r} \\
+
+\noindent Execute a script or reproducible document straight from gist:
+
+\begin{verbatim}
+  curl -X POST http://localhost/ocpu/gist/hadley/5721744/html.r
+\end{verbatim}
+
+
+\subsection{Test the Caching Server}
+
+An easy way to test if the caching server works is simply by calling the same function twice in a short time. If the cache server is working, the output will be identical (and the second request returns really fast):
+
+\begin{verbatim}
+  curl http://localhost/ocpu/library/stats/R/rnorm -d n=10
+  curl http://localhost/ocpu/library/stats/R/rnorm -d n=10
+\end{verbatim}
+Try to disable the cache server and run the same experiment again:
+\begin{verbatim}
+  sudo service opencpu-cache stop
+\end{verbatim}
+You should now see different responses. Afterwards, re-enable the caching server:
+\begin{verbatim}
+  sudo service opencpu-cache start
+\end{verbatim}
+Another way to infer if the caching server is active is by looking at the \texttt{Server} response header:
+\begin{verbatim}
+  curl -v http://localhost/ocpu/library/
+\end{verbatim}
+If the cache server is online the header will be \texttt{Server:nginx/1.2.6 (Ubuntu)}. If the cache server is offline, it will be \texttt{Server:Apache/2.2.22 (Ubuntu)}.
+
 \begin{appendices}
 
 \section{Installing \texttt{r-cran} packages from \texttt{c2d4u}}
@@ -318,80 +480,9 @@ which(allpackages[,"Built"] < 3.0)
 \noindent If any packages show up which have been built with an older version of R, it is best to uninstall them because they won't work and will cause an error when loaded.
 
 
-\section{Testing OpenCPU Installation}
+\section{Using OpenCPU with R-Studio}
 
-A complete overview and demonstration of the OpenCPU api is available on the website: \href{http://www.opencpu.org}{www.opencpu.org}. Below a few basic examples to illustrate basic functionality and verify that things are working. Also note that OpenCPU ships with a little testing page that can be used to do http requests. The testing page can be found at \url{http://my.server.com/ocpu/test}. 
-
-\subsection*{The package API}
-
-\noindent Basic \texttt{HTTP GET} requests can be performed either by simply opening a url in a web browser, or with a curl command:
-
-\begin{verbatim}
-  curl -L http://my.server.com/ocpu/library/
-\end{verbatim}
-The \texttt{-L} flag makes \texttt{curl} follow redirects which is often useful. In addition you can add the \texttt{-v} flag for more verbose output which includes headers:
-\begin{verbatim}
-  curl -L -v http://my.server.com/ocpu/library/
-\end{verbatim}
-
-\noindent The following endpoints can be accessed using \texttt{HTTP GET}:\\
-
-\indent \url{http://localhost/ocpu/test} \\
-\indent \url{http://localhost/ocpu/library} \\
-\indent \url{http://localhost/ocpu/library/stats/R} \\
-\indent \url{http://localhost/ocpu/library/stats/R/rnorm} \\
-\indent \url{http://localhost/ocpu/library/stats/man} \\
-\indent \url{http://localhost/ocpu/library/stats/man/rnorm/text} \\
-\indent \url{http://localhost/ocpu/library/stats/man/rnorm/html} \\
-\indent \url{http://localhost/ocpu/library/stats/man/rnorm/pdf} \\
-\indent \url{http://localhost/ocpu/library/datasets} \\
-\indent \url{http://localhost/ocpu/library/datasets/R/cars} \\
-\indent \url{http://localhost/ocpu/library/datasets/R/cars/json} \\
-\indent \url{http://localhost/ocpu/library/datasets/R/cars/csv} \\
-\indent \url{http://localhost/ocpu/library/datasets/R/cars/tab} \\
-\indent \url{http://localhost/ocpu/library/datasets/R/cars/rda} \\
-
-
-\subsection*{Calling a function}
-
-\noindent Now try calling some functions and scripts using \texttt{HTTP POST}. To do a \texttt{POST} request, we cannot simply open the URL in the browser. Either use the testing webapp, or use \texttt{curl} with the \texttt{-X} or \texttt{-d} flags. For example:
-
-\begin{verbatim}
-  curl -X POST http://localhost/ocpu/library/utils/R/sessionInfo
-  curl http://localhost/ocpu/library/stats/R/rnorm -d n=10\&mean=100
-\end{verbatim}
-In OpenCPU, a successful \texttt{POST} requests usually returns a \texttt{HTTP 201} status, and the response body contains the location of the output data. For example, it might look like this:
-
-\begin{verbatim}
-  curl http://localhost/ocpu/library/stats/R/rnorm -d n=10\&mean=100
-  > /ocpu/tmp/x032a8fee/R/.val
-  > /ocpu/tmp/x032a8fee/stdout
-  > /ocpu/tmp/x032a8fee/source
-  > /ocpu/tmp/x032a8fee/console
-  > /ocpu/tmp/x032a8fee/info
-\end{verbatim}
-The output can then be retrieved using \texttt{HTTP GET}. In this case we would get: \\
-
-\indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val} \\
-\indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val/json} \\
-\indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val/ascii} \\
-\indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val/rda} \\
-\indent \url{http://localhost/ocpu/tmp/x032a8fee/console} \\
-
-\subsection*{External Repositories}
-
-\noindent The following endpoints represent external repositories. These are only available if they are enabled in the server configuration and if the server has internet access. The API is identical to the one above, with the difference that the \texttt{/library/} has been replaced with some external repository.
-
-\begin{verbatim}
-http://localhost/cran/plyr
-http://localhost/cran/plyr/R
-http://localhost/cran/plyr/R/ldply
-http://localhost/cran/plyr/man
-http://localhost/cran/plyr/man/ldply
-http://localhost/cran/plyr/man/ldply/html
-\end{verbatim}
-
-
+Both the OpenCPU cloud server and OpenCPU single-user server have been tested to work with R-studio version 0.98 and higher. 
 
 
 \end{appendices}
