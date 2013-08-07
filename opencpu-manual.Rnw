@@ -30,16 +30,16 @@ insert_fun = function(name) {
 
 \section{What is OpenCPU}
 
-Internet access, public cloud computing, live and open data and scientific super computers are transforming the landscape of data analysis. Researchers increasingly collaborate by sharing data, code and results online. This is a powerful way to learn and teach statistical analysis and at the same time it improves transparency and accessibility of the underlying methods. Moreover, by centralizing computation we can address some scalability challenges and facilitate direct integration of analyses in systems and applications. We expect that providing open and reprodicuble materials on social platforms, in addition to a written report or article, will soon become an integral part of the scientific publication proces. The OpenCPU framework is a first attempt at building a complete system to support such applications. \\
+Internet access, public cloud computing, live and open data and scientific super computers are transforming the landscape of data analysis. Researchers increasingly collaborate by sharing data, code and results online. This is a powerful way to learn and teach statistical analysis and at the same time it improves transparency and accessibility of the underlying methods. Moreover, by centralizing computation we can address some scalability challenges and facilitate direct integration of analyses in systems and applications. We expect that providing reprodicuble materials and analysis tools, in addition to a written report or article, will soon become an integral part of the scientific publication proces. The OpenCPU framework is a first attempt at building the foundations to support such integrated, collaborative, reproducible analysis systems. \\
 
-The OpenCPU framework for embedded scientific computing and reproducible research is based on R, Latex and Pandoc. The OpenCPU server exposes an HTTP API to share and execute scripts, functions and reproducible documents. The system addresses many of the domain specific problems inherent to scientific computing, and abstracts away technicalities behind a well defined intuitive HTTP interface. This provides a foundation for scalable applications with embedded statistical analysis, vizualization and reporting. 
+The OpenCPU framework is based on R, Latex and Pandoc. The server exposes an HTTP API to share and execute scripts, functions and reproducible documents. The system addresses many of the domain specific problems inherent to scientific computing, and abstracts away technicalities behind a well defined intuitive HTTP interface. This provides a foundation for scalable applications with embedded statistical analysis, vizualization and reporting.
 
-\subsection{Design Philosophy}
+\subsection{Seperating analysis from web development}
 
-OpenCPU completely seperates the statistical computing from other parts of the system or application. OpenCPU has been designed to run on a seperate server, interfaced only through the HTTP API. The client needs no knowledge of R or Latex; OpenCPU defines a mapping between HTTP requests and R function calls which results in a natural RPC-like protocol.  
+When using OpenCPU, R is only used for what it is good at: analysis and graphics. The design completely seperates the statistical computing from other parts of your system or application. OpenCPU has been designed to run on a remote server, interfaced only through the HTTP API. Clients need no knowledge of R or Latex; the OpenCPU API defines a mapping between HTTP requests and R function calls which results in a natural RPC-like protocol. Any software program that speaks HTTP can call R functions and scripts, without the need to understand, generate or parse R code.
 
 \begin{verbatim}
-curl http://localhost/ocpu/library/stats/R/rnorm/json --data n=3
+  curl http://localhost/ocpu/library/stats/R/rnorm/json --data n=3
   [
     3.05644,
     0.38511,
@@ -47,21 +47,17 @@ curl http://localhost/ocpu/library/stats/R/rnorm/json --data n=3
   ]
 \end{verbatim}
 
-\noindent When using OpenCPU, R only needs to do what it was designed for: analysis and graphics. The OpenCPU server exposes this functionality through a clean and reliable API. Any software program that speaks HTTP can call R functions and scripts, without the need to understand, generate or parse R code. From there, it is completely up to the client on how to process or present the output. OpenCPU deliberately does not include, suggest or enforce the use of any specific web development language, GUI, etc. This is quite different from some other R/web systems, which ship with built-in templates to generate parameratized out-of-the-box widgets from R code.  \\
+\noindent From there, it is completely up to the client on how to process or present the output. OpenCPU deliberately does not include, suggest or enforce the use of any specific web development language, GUI, etc. You are not restricted to a limited set of available widgets or panels that fits the R paradigm. OpenCPU manages incoming requests, security, resource allocation, data I/O and other computing technicalities. From there, it is completely up to the developer(s) and their imagination how to design their application. This is a major difference with frameworks that ship with built-in templates to generate parameratized out-of-the-box widgets from R code. Emphasis in the design of OpenCPU is on reliability and simplicity in order to develop scalable, production quality software. Because OpenCPU layers on HTTP, we can leverage existing technology (cache-control, https, load balancing, etc). Finally, the API definition makes it possible to gracefully extend, reimplement or replace parts of the system in the future.
 
-\subsection{Seperating Analysis from Web Development}
+\subsection{Using OpenCPU in a team}
 
-OpenCPU clearly seperates the roles of analyst and web developer. The analyst implements and documents R functions or scripts, just as he is used to. The web developers can use their favorite language, tools and web frameworks to interact call these functions over HTTP. OpenCPU provides a bridge between these two systems, without imposing additional constraints on either side. There is no need for the web developer to learn R, nor does the analyst have to worry about GUIs or web related technicalities. We are not restricted to a limited set of available widgets or panels that fits the R paradigm. OpenCPU manages incoming requests, security, resource allocation, data I/O and other computing technicalities. From there, we leave it completely up to the developer(s) and their imagination how to design their application. \\
-
-Emphasis in the OpenCPU design is on reliability, simplicity and maintainability in order to develop scalable production ready software. The clean seperation of statistical computing from the other parts of the system results in well organized applications and makes collaboration within a team of statisticians and developers easier than when the two parts are tightly intertwined. Because OpenCPU layers on HTTP, we can leverage existing technology (cache-control, https, load balancing, etc, etc). Finally, the API definition makes it possible to gracefully extend, reimplement or replace parts of the system in the future.
+OpenCPU decouples the roles of analyst and web developer. The analyst implements and documents R functions or scripts, just as he is used to. The web developers can use their favorite language, tools and web frameworks to interact call these functions over HTTP. OpenCPU provides a bridge between these two systems, without imposing additional constraints on either side. There is no need for the web developer to learn R, nor does the analyst have to worry about GUIs or web related technicalities. This seperation is supposed to keep applications well organized and easy to maintain, while making collaboration within a team of statisticians and developers easier than when the two parts are tightly intertwined.
 
 \subsection{OpenCPU is really open}
 
-The design of OpenCPU has been driven by the paradigms of open-source, contributed code and reproducibile research which are central to scientific computing. This is where the design of OpenCPU deviates from a web development frameworks in other languages. A client can call any script or function from any package and also the source code of these resources is always readable. In unix analogy: any user has \texttt{r-x} access on all R code on the system. Furthermore, OpenCPU does not restrict users to some predefined set of functionality: instead, all users are explicitly allowed to store and execute custom code on the server. OpenCPU wants users to play, share, run, produce and reproduce results with each other.\\
+The design of OpenCPU has been driven by the paradigms of open-source, contributed code and reproducibile research which are central to the domain of scientific computing. This is where the design of OpenCPU deviates from a web development frameworks in other languages. A client is allowed to call any script or function from any package, and all source code is readable as well. In unix analogy: any user has \texttt{r-x} access on all resources on the system. OpenCPU does not restrict users to some predefined set of functionality: instead, all users are explicitly allowed to store and execute custom code on the server. OpenCPU wants users to play, share, run, produce and reproduce results with each other.\\
 
-For these reasons, OpenCPU takes a different approach to security than many other frameworks. OpenCPU uses AppArmor: a security module in the Linux kernel, to enforce security policies on a by-process level. These security restrictions make it possible to allow for arbitrary code execution, without potentially compromising the system. The policies are completely customisable, and section \ref{security} talks a bit more on security and AppArmor. \\
-
-However, even though the system is designed to be open, it is not mandatory to use it that way. It is perfectly fine to employ OpenCPU solely as a reliable computational back-end inside some larger system or application, similar to e.g. a database server. In such a design, the users do not interact directly with the OpenCPU server, and can only use functionality exposed in your application layer.
+For these reasons, OpenCPU takes a different approach to security. OpenCPU uses AppArmor: a security module in the Linux kernel, to enforce security policies on a by-process level. These security restrictions make it possible to allow for arbitrary code execution, while protecting against abuse or compromising the system. The policies are completely customisable, and section \ref{security} talks a bit more on security and AppArmor. However, even though the system is designed to be open, it is not mandatory to use it that way. It is perfectly fine to employ OpenCPU solely as a reliable computational back-end inside some larger system or application, similar to e.g. your database server. In such a design, users do not interact directly with the OpenCPU server, and can only use functionality exposed in your application layer.
 
 \subsection{OpenCPU Apps}
 
@@ -187,7 +183,7 @@ Alternatively, to remove all of OpenCPU at once:
   
 \noindent Removing the \texttt{opencpu-0-8} \emph{repository} from the system is done by deleting the file from the \texttt{/etc/apt/sources.list.d/} directory.  
   
-\section{Managing the OpenCPU Cloud Server}
+\section{Managing the OpenCPU cloud server}
 
 To control the OpenCPU server:
 \begin{verbatim}
@@ -247,7 +243,7 @@ install_github("dplyr", "hadley")
 \end{verbatim}
 However, note that these packages will only work if they were built using R version 3.0 or higher, which is \textbf{not the case} for the standard packages that ship with Ubuntu Raring 13.04 or lower. Appendix \ref{c2d4u} explains how to use third party repositories like \texttt{c2d4u} instead.
 
-\subsection{Configuring the OpenCPU server}
+\subsection{Configuring the OpenCPU cloud server}
 
 The OpenCPU configuration file is written in \texttt{JSON} and located at:
 
@@ -358,9 +354,28 @@ The output can then be retrieved using \texttt{HTTP GET}. In this case we would 
 \indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val/json} \\
 \indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val/ascii} \\
 \indent \url{http://localhost/ocpu/tmp/x032a8fee/R/.val/rda} \\
-\indent \url{http://localhost/ocpu/tmp/x032a8fee/console} 
+\indent \url{http://localhost/ocpu/tmp/x032a8fee/console} \\
 
-\subsection{Executing a Script}
+\noindent There is one exception to this rule: in the common special case where we are only interested in the \texttt{JSON} representation of the object returned by the function, we add another \texttt{/json} after the function name in the url of the \texttt{HTTP POST} request:
+
+\begin{verbatim}
+  curl http://localhost/ocpu/library/stats/R/rnorm/json -d n=2
+  [
+    -1.2804,
+  	-0.75013
+  ]
+\end{verbatim}
+In this case, a successfull call will not return 200 (instead of 201), and the response body contains the output from the function in JSON; no need to do an additional \texttt{GET} request. However in most cases, the two-step procedure is preferred.\\
+
+\noindent Finally It is also possible to specify \emph{input} arguments to a function call using JSON:
+
+\begin{verbatim}
+  curl http://localhost/ocpu/library/stats/R/rnorm \
+  -H "Content-Type: application/json" -d '{"n":10, "mean": 10, "sd":10}'
+\end{verbatim}
+
+
+\subsection{Executing a script}
 
 Besides calling a function, the \texttt{HTTP POST} method can also be used to execute a script. The script is executed according to it's file extention. Currently the following extensions are supported: \texttt{R} (Rscript), \texttt{Rnw}, \texttt{Rmd} (knitr), \texttt{brew} (brew), \texttt{tex} (latex), \texttt{md} (pandoc):
 
@@ -381,7 +396,7 @@ Besides calling a function, the \texttt{HTTP POST} method can also be used to ex
 \end{verbatim}
 
 
-\subsection{External Repository API's}
+\subsection{External package repositories}
 
 \noindent If the OpenCPU cloud server has direct access to the internet, it also provides access packages and/or scripts from external repositories, such as CRAN or Github. This is convenient for development: package authors and users can test and use OpenCPU apps without the need for an administrator to install packages on the server. Note that the administrator can easily disable these features so they might not be available on every OpenCPU server.\\
 
@@ -427,7 +442,7 @@ The \texttt{/ocpu/gist/:user/:gistid/} API interfaces to \textbf{files} (scripts
 \end{verbatim}
 
 
-\subsection{Test the Caching Server}
+\subsection{Test the caching server}
 
 An easy way to test if the caching server works is simply by calling the same function twice in a short time. If the cache server is working, the output will be identical (and the second request returns really fast):
 
@@ -480,10 +495,11 @@ which(allpackages[,"Built"] < 3.0)
 \noindent If any packages show up which have been built with an older version of R, it is best to uninstall them because they won't work and will cause an error when loaded.
 
 
-\section{Using OpenCPU with R-Studio}
+\section{Using OpenCPU with RStudio}
 
-Both the OpenCPU cloud server and OpenCPU single-user server have been tested to work with R-studio version 0.98 and higher. 
+The OpenCPU single-user server has been tested to work on RStudio desktop on both Windows and Mac, as well as in RStudio server. If RStudio server is hosted behind a firewall, \texttt{httpuv} might not be accessible, but users can still use the \texttt{/custom/ocpu} path on the RStudio server port. For example \texttt{rstudio.server.com/custom/ocpu}.\\
 
+The OpenCPU cloud server works great together with RStudio server. Both systems run best on Ubuntu and will happily share the same R installation. You can use RStudio server to install R packages (and OpenCPU apps) to make them available through the OpenCPU API.
 
 \end{appendices}
 
