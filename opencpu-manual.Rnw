@@ -70,7 +70,7 @@ library(devtools)
 install_github("gitstats", "opencpu")
 @
 
-\noindent The application can then be opened in a browser. For example, if the application was installed on an OpenCPU cloud server, it would be available at \href{http://localhost/ocpu/library/gitstats/www}{http://localhost/ocpu/library/gitstats/www}. \\
+\noindent The application can then be opened in a browser. If the application was installed on an OpenCPU cloud server, it would now be available at \href{http://localhost/ocpu/library/gitstats/www}{http://localhost/ocpu/library/gitstats/www}. \\
 
 \noindent To make developing OpenCPU apps easier, a simple Javascript client library is available called \href{https://github.com/jeroenooms/opencpu.js}{opencpu.js}. This library depends on jQuery and  uses \texttt{\$.ajax} to provide javascript wrappers to the OpenCPU API. It is not mandatory to use this javascript library, but it provides a convenient basis for building OpenCPU apps.
 
