@@ -17,7 +17,7 @@ insert_fun = function(name) {
 
 \title{The OpenCPU Server Manual}
 \subtitle{Version 0.8-0}
-\author{Jeroen Ooms}
+\author{Jeroen Ooms\vspace{-1ex}}
 \date{}
 
 \begin{document}
@@ -30,13 +30,13 @@ insert_fun = function(name) {
 
 \section{What is OpenCPU}
 
-Internet access, public cloud computing, live and open data and scientific super computers are transforming the landscape of data analysis. Researchers increasingly collaborate by sharing data, code and results online. This is a powerful way to learn and teach statistical analysis and at the same time it improves transparency and accessibility of the underlying methods. Moreover, by centralizing computation we can address some scalability challenges and facilitate direct integration of analyses in systems and applications. We expect that providing reprodicuble materials and analysis tools, in addition to a written report or article, will soon become an integral part of the scientific publication proces. The OpenCPU framework is a first attempt at building the foundations to support such integrated, collaborative, reproducible analysis systems. \\
+Internet access, public cloud computing, live and open data and scientific super computers are transforming the landscape of data analysis. Researchers increasingly collaborate by sharing data, code and results online. This is a powerful way to learn and teach statistical analysis and at the same time it improves transparency and accessibility of the underlying methods. Moreover, by centralizing computation we can address some scalability challenges and facilitate direct integration of analyses in systems and applications. We expect that producing reprodicuble materials and analysis tools, in addition to a written report or article, will soon become an integral part of the scientific publication proces. The OpenCPU framework is a first attempt at building the foundations to support such integrated, collaborative, reproducible analysis systems. \\
 
 The OpenCPU framework is based on R, Latex and Pandoc. The server exposes an HTTP API to share and execute scripts, functions and reproducible documents. The system addresses many of the domain specific problems inherent to scientific computing, and abstracts away technicalities behind a well defined intuitive HTTP interface. This provides a foundation for scalable applications with embedded statistical analysis, vizualization and reporting.
 
 \subsection{Seperating analysis from web development}
 
-When using OpenCPU, R is only used for what it is good at: analysis and graphics. The design completely seperates the statistical computing from other parts of your system or application. OpenCPU has been designed to run on a remote server, interfaced only through the HTTP API. Clients need no knowledge of R or Latex; the OpenCPU API defines a mapping between HTTP requests and R function calls which results in a natural RPC-like protocol. Any software program that speaks HTTP can call R functions and scripts, without the need to understand, generate or parse R code.
+When using OpenCPU, R is only used for what it is good at: analysis and graphics. The framework completely seperates the statistical computing from other parts of your system or application. OpenCPU runs on a remote server, interfaced only through the HTTP API. Clients need no knowledge of R or Latex; the OpenCPU API defines a mapping between HTTP requests and R function calls which results in a natural RPC-like protocol. Any software program that speaks HTTP can call R functions and scripts, without the need to understand, generate or parse R code.
 
 \begin{verbatim}
   curl http://localhost/ocpu/library/stats/R/rnorm/json --data n=3
