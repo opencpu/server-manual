@@ -1,5 +1,6 @@
-%%This is a very basic article template.
-%%There is just one section and two subsections.
+%\VignetteIndexEntry{The OpenCPU Server PDF Manual}
+%\VignetteEngine{knitr::knitr}
+
 \documentclass{scrartcl}\usepackage[]{graphicx}\usepackage[]{color}
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
@@ -61,8 +62,8 @@
 \usepackage{graphicx}
 \usepackage{verbatim}
 
-\title{The OpenCPU Server Manual}
-\subtitle{Version 0.8-0}
+\title{The OpenCPU Server PDF Manual}
+\subtitle{Version 1.0}
 \author{Jeroen Ooms\vspace{-1ex}}
 \date{}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -199,7 +200,7 @@ Before installing OpenCPU, make sure the system is up to date:
 To install OpenCPU, first add the OpenCPU repository to the system:
 
 \begin{verbatim}
-  sudo add-apt-repository ppa:opencpu/opencpu-0.8 -y
+  sudo add-apt-repository ppa:opencpu/opencpu-1.0 -y
   sudo apt-get update
 \end{verbatim}
 We can now go ahead and install the server:
