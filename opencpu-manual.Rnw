@@ -9,12 +9,15 @@ insert_fun = function(name) {
 }
 @
 
+\usepackage{upquote}
 \usepackage[colorlinks, urlcolor=blue]{hyperref}
 \usepackage[toc,page]{appendix}
 \usepackage{fullpage}
 \usepackage{graphics}
 \usepackage{graphicx}
 \usepackage{verbatim}
+
+
 
 \title{The OpenCPU Server PDF Manual}
 \subtitle{Version 1.0}
