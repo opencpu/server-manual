@@ -4,5 +4,6 @@
 *.log
 *.toc
 *.gz
+*.tex
 Rplot*
 opencpu-manual-concordance.tex
