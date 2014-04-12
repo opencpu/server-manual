@@ -78,7 +78,7 @@ curl http://localhost/ocpu/library/stats/R/rnorm/json --data n=3
 ]
 \end{codeblock}
 
-From there it is up to the client on how to process or present the output. \OpenCPU deliberately does not include, suggest or enforce the use of any specific web development language, \GUI, etc. You are not restricted to a limited set of available widgets or panels that fits the \R paradigm. \OpenCPU manages incoming requests, security, resource allocation, data \texttt{I/O} and other technicalities. Nothing more, nothing less. This is the primary difference with frameworks that include built-in templates to generate out-of-the-box widgets from \R code. Emphasis in the design of \OpenCPU is on interoperability, reliability and simplicity in order to develop scalable, production quality software. Because \OpenCPU layers on \HTTP, we can leverage existing technology (cache-control, \texttt{SSL}, load balancing, etc). Finally, the \API definition makes it possible to gracefully extend, re-implement or replace parts of the system in the future.
+From there it is up to the client on how to process or present the output. \OpenCPU deliberately does not include, suggest or enforce the use of any specific web development language, \GUI, etc. You are not restricted to a limited set of available widgets or panels that fits the \R paradigm. \OpenCPU manages incoming requests, security, resource allocation, data \texttt{I/O} and other technicalities. Nothing more, nothing less. This is the main difference with frameworks that include built-in templates to generate out-of-the-box widgets from \R code. Emphasis in the design of \OpenCPU is on interoperability, reliability and simplicity in order to develop scalable, production quality software. Because \OpenCPU layers on \HTTP, we can leverage existing technology (cache-control, \texttt{SSL}, load balancing, etc). Finally, the \API definition makes it possible to gracefully extend, re-implement or replace parts of the system in the future.
 
 \subsection{Using OpenCPU in a team}
 
@@ -103,7 +103,7 @@ install_github("gitstats", "opencpu")
 
 If the application was installed on an \OpenCPU cloud server, the app is directly available. Point your browser to \href{http://your.server.com/ocpu/library/gitstats/www}{http://your.server.com/ocpu/library/gitstats/www}.
 
- To make development of \OpenCPU apps easier, a Javascript client library is available called \href{https://github.com/jeroenooms/opencpu.js}{opencpu.js}. This library depends on \texttt{jQuery} and uses \texttt{\$.ajax} to provide \texttt{JavaScript} wrappers to the \OpenCPU \API. It is not required to use this \texttt{JavaScript} library but it provides a convenient basis for building \OpenCPU apps.
+ To make development of \OpenCPU apps easier, a \texttt{JavaScript} client library is available called \href{https://github.com/jeroenooms/opencpu.js}{opencpu.js}. This library depends on \texttt{jQuery} and uses \texttt{\$.ajax} to provide \texttt{JavaScript} wrappers to the \OpenCPU \API. It is not required to use this \texttt{JavaScript} library but it provides a convenient basis for building \R web applications.
 
 \subsection{The OpenCPU single-user server}
 
