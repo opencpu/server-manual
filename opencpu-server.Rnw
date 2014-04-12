@@ -221,7 +221,7 @@ sudo service opencpu stop
 sudo service opencpu restart
 \end{codeblock}
 
-This will automatically enable/disable \OpenCPU in \apache and restart the server. If the \texttt{opencpu-cache} package has been installed this server can be controlled separately:
+This automatically enables/disables \OpenCPU in \apache and restarts the server. The cache server can be controlled separately (if \texttt{opencpu-cache} is installed):
 
 \begin{codeblock}
 sudo service opencpu-cache start
@@ -300,7 +300,7 @@ Please make sure that any configuration files are formatted using valid \JSON at
 
 Installation of \OpenCPU will automatically enable HTTPS in your web server. Hence you should be able to access \OpenCPU via \texttt{https://your.server.com/ocpu}. By default, the server uses self-signed "snake-oil" SSL certificates that ship with Ubuntu. These are convenient for development, but don't provide real security and will trigger the "untrusted host" warning in most modern browsers. Once you go in production, it is recommended to replace these certificates with your own SSL certificates, signed by a certificate authority. 
 
- To set up HTTPS when using \texttt{opencpu-server} \emph{without} \texttt{opencpu-cache}, the certificates need to be configured in \apache. This is done by editing \texttt{/etc/apache2/sites-available/default-ssl}. The file contains comments with further instructions. On the other hand, on a server which does have \texttt{opencpu-cache} installed, the certificates need to be configured in the following \nginx configuration file: \texttt{/etc/nginx/sites-available/opencpu}. After installing the certificates, restart \apache/\nginx for things to take effect.
+ To set up HTTPS when using \texttt{opencpu-server} \emph{without} \texttt{opencpu-cache}, the certificates need to be configured in \apache. This is done in \texttt{/etc/apache2/sites-available/default-ssl}. The file contains comments with further instructions. On the other hand, on a server which does have \texttt{opencpu-cache} installed, the certificates need to be configured in the following \nginx configuration file: \texttt{/etc/nginx/sites-available/opencpu}. After installing the certificates, restart \apache/\nginx for things to take effect.
 
 \subsection{Customizing the security profile}
 \label{security}
@@ -560,9 +560,9 @@ sudo apt-get install r-cran-ggplot2
 
 And then navigate to \url{http://your.server.com/ocpu/library/ggplot2/}
 
-\section{Using \OpenCPU with RStudio}
+\section{Using OpenCPU with RStudio}
 
- The \OpenCPU cloud server works great together with RStudio server. Both systems run best on Ubuntu and will happily share the same \R installation. You can use RStudio server to develop and install \R packages/apps and make them available through the \OpenCPU \API. Starting version 1.3, the \OpenCPU repository includes a copy of \texttt{rstudio-server} for easy installation.
+The \OpenCPU cloud server works great together with RStudio server. Both systems run best on Ubuntu and will happily share the same \R installation. You can use RStudio server to develop and install \R packages/apps and make them available through the \OpenCPU \API. Starting version 1.3, the \OpenCPU repository includes a copy of \texttt{rstudio-server} for easy installation.
 
 \begin{codeblock}
 sudo apt-get install rstudio-server
