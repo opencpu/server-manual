@@ -250,11 +250,11 @@ Section \ref{security} has more information on customizing \OpenCPU security pol
 
 \subsection{Installing R packages on the server}
 
-In order for packages to be accessible through the \texttt{/ocpu/library} \API, they need to be installed in the global library. Note that \R needs to be started as root to install packages in the global library. To install a single source package:
+In order for packages to be accessible through \texttt{/ocpu/library/}, they need to be installed in the global library. Note that \R needs to be started as root to install packages in the global library. To install a single source package:
 
 \begin{codeblock}
 wget http://cran.r-project.org/src/contrib/glmnet_1.9-5.tar.gz
-sudo R CMD INSTALL glmnet_1.9-5.tar.gz
+sudo R CMD INSTALL glmnet_1.9-5.tar.gz --library=/usr/local/lib/R/site-library
 \end{codeblock}
 
 Alternatively we can use an interactive session to install packages from \CRAN or \Github:
