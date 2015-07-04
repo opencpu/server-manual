@@ -46,7 +46,7 @@
 
 \title{The OpenCPU Server PDF Manual}
 
-\author{Version 1.4}
+\author{Version 1.5}
 \date{}
 
 \begin{document}
@@ -129,7 +129,7 @@ opencpu$browse("library/gitstats/www")
 
 \section{Installing the OpenCPU cloud server}
 
-The \OpenCPU cloud server version 1.4 runs on \textbf{Ubuntu 14.04 (trusty) or higher}. The \OpenCPU system consists of a number of standard Ubuntu installation packages. These are:
+The \OpenCPU cloud server version 1.5 runs on \textbf{Ubuntu 14.04 (trusty) or higher}. The \OpenCPU system consists of a number of standard Ubuntu installation packages. These are:
 
 \begin{itemize}
  \item \texttt{opencpu} -- Alias for \texttt{opencpu-server}.
@@ -140,7 +140,7 @@ The \OpenCPU cloud server version 1.4 runs on \textbf{Ubuntu 14.04 (trusty) or h
 
 \subsection{Getting an Ubuntu server}
 
-The recommended installation of \OpenCPU 1.4 requires Ubuntu version 14.04. Any flavour of Ubuntu will do, e.g. Ubuntu Desktop, Ubuntu Server, Kubuntu, Edubuntu, etc. The preferred way of running \OpenCPU is on a clean Ubuntu Server edition. A copy of the Ubuntu Server installation disc ISO can be obtained from the Ubuntu download pages at \url{http://www.ubuntu.com/download/server}.
+The recommended installation of \OpenCPU 1.5 requires Ubuntu version 14.04. Any flavour of Ubuntu will do, e.g. Ubuntu Desktop, Ubuntu Server, Kubuntu, Edubuntu, etc. The preferred way of running \OpenCPU is on a clean Ubuntu Server edition. A copy of the Ubuntu Server installation disc ISO can be obtained from the Ubuntu download pages at \url{http://www.ubuntu.com/download/server}.
 
 Another way to get started is by spinning up a pay-by-hour server instance on Amazon EC2. When using \OpenCPU on EC2, it is highly recommended to pick one of the \textbf{C3 compute optimized} instance types, for example \texttt{c3.large}. The C3 instance types run on an Ivy Bridge Processor and Solid State Disk, both of which will make \OpenCPU very happy. The Ubuntu team provides very nice ready-to-go daily updated preinstalled Ubuntu-Server images for EC2 at \url{http://cloud-images.ubuntu.com/trusty/current/}.
 
@@ -157,7 +157,7 @@ sudo apt-get upgrade
 To install \OpenCPU start by adding the repository to the system:
 
 \begin{codeblock}
-sudo add-apt-repository ppa:opencpu/opencpu-1.4 -y
+sudo add-apt-repository ppa:opencpu/opencpu-1.5 -y
 sudo apt-get update
 \end{codeblock}
 
