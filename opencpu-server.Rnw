@@ -1,6 +1,3 @@
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{The OpenCPU Server PDF Manual}
-
 \documentclass{scrartcl}
 
 \usepackage[colorlinks, urlcolor=blue]{hyperref}
@@ -46,14 +43,14 @@
 
 \title{The OpenCPU Server PDF Manual}
 
-\author{Version 1.5}
+\author{Version 2.0}
 \date{}
 
 \begin{document}
 
 \maketitle
 
- The latest version of this document is available at \href{https://github.com/jeroenooms/opencpu-manual}{https://github.com/jeroenooms/opencpu-manual}. Typos, comments, suggestions about this manual go in the \href{https://github.com/jeroenooms/opencpu-manual/issues}{issues page} for the repo. 
+ The latest version of this document is available at \href{https://github.com/opencpu/server-manual}{https://github.com/opencpu/server-manual}. Typos, comments, suggestions about this manual go in the \href{https://github.com/opencpu/server-manual/issues}{issues page} for the repo. 
 
 \tableofcontents
 
@@ -92,16 +89,16 @@ The \texttt{MAC} based security profiles make it possible to open up an \OpenCPU
 
 \OpenCPU defines a standard way to build and share \emph{apps}. An \OpenCPU app is an \R package which, in addition to the regular contents, ships with some web page(s). These pages interact with the \R functions in this package through the \OpenCPU \API. By convention, these web pages (\texttt{html/css/js} files) are included in the \texttt{/inst/www/} directory of the \R source package. This way, \OpenCPU apps provide a convenient way to package and ship standalone \R web applications. 
 
-Because \OpenCPU apps are simply \R packages, they are developed, distributed and installed the same way as any other \R package. Several example apps are available from the \OpenCPU github organization at \href{https://github.com/opencpu}{https://github.com/opencpu}. For example to install the \href{https://github.com/opencpu/gitstats}{gitstats} app, we can use the \texttt{devtools} package:
+Because \OpenCPU apps are simply \R packages, they are developed, distributed and installed the same way as any other \R package. Several example apps are available from the \texttt{rwebapps} github organization at \href{https://github.com/rwebapps}{https://github.com/rwebapps}. For example to run the \href{https://github.com/rwebapps/markdownapp}{markdownapp} app:
 
 <<eval=FALSE>>=
-library(devtools)
-install_github("gitstats", "opencpu")
+library(opencpu)
+ocpu_start_app("rwebapps/markdownapp")
 @
 
-If the application was installed on an \OpenCPU cloud server, the app is directly available. Point your browser to \href{http://your.server.com/ocpu/library/gitstats/www}{http://your.server.com/ocpu/library/gitstats/www}.
+If the application was installed on an \OpenCPU cloud server, the app is directly available. Point your browser to \href{http://your.server.com/ocpu/apps/rwebapps/markdownapp}{http://your.server.com/ocpu/apps/rwebapps/markdownapp}.
 
- To make development of \OpenCPU apps easier, a \texttt{JavaScript} client library is available called \href{https://github.com/jeroenooms/opencpu.js}{opencpu.js}. This library depends on \texttt{jQuery} and uses \texttt{\$.ajax} to provide \texttt{JavaScript} wrappers to the \OpenCPU \API. It is not required to use this \texttt{JavaScript} library but it provides a convenient basis for building \R web applications.
+ To make development of \OpenCPU apps easier, a \texttt{JavaScript} client library is available called \href{https://github.com/opencpu/opencpu.js}{opencpu.js}. This library depends on \texttt{jQuery} and uses \texttt{\$.ajax} to provide \texttt{JavaScript} wrappers to the \OpenCPU \API. It is not required to use this \texttt{JavaScript} library but it provides a convenient basis for building \R web applications.
 
 \subsection{The OpenCPU single-user server}
 
@@ -111,38 +108,41 @@ Two implementations of \OpenCPU are available: a single-user server that runs in
 install.packages("opencpu")
 @
 
-When the \OpenCPU package is loaded, the server is automatically started:
+Load the \OpenCPU package to start the local server:
 
 <<eval=FALSE>>=
 library(opencpu)
+ocpu_start_server()
 @
+
 
  Because \R is single-threaded, the single-user server does not support concurrent requests (but httpuv does a good job in queuing them). Also it does not enforce any security. The single-user server is great for developing apps, that can later be published on the \OpenCPU cloud server. When using the single-user server, we can easily load the apps for local use:
 
+
 <<eval=FALSE>>=
-install_github("gitstats", "opencpu")
-opencpu$browse("library/gitstats/www")
+ocpu_start_app("rwebapps/markdownapp")
 @
 
- The \texttt{opencpu\$browse} function will automatically open the app in the default web browser.  
+
+ The \texttt{ocpu\_start\_app} function will automatically open the app in the default web browser.  
 
 
 \section{Installing the OpenCPU cloud server}
 
-The \OpenCPU cloud server version 1.5 runs on \textbf{Ubuntu 14.04 (trusty) or higher}. The \OpenCPU system consists of a number of standard Ubuntu installation packages. These are:
+The \OpenCPU cloud server version 2.0 runs on \textbf{Ubuntu 16.04 (Xenial) or higher}. The \OpenCPU system consists of a number of standard Ubuntu installation packages. These are:
 
 \begin{itemize}
  \item \texttt{opencpu} -- Alias for \texttt{opencpu-server}.
  \item \texttt{opencpu-server} -- The main \OpenCPU \API server. Depends on \texttt{R} and \texttt{apache2}.
- \item \texttt{opencpu-cache} --  \OpenCPU caching server. Depends on \texttt{nginx}.
  \item \texttt{opencpu-full} -- Installs \texttt{opencpu}, \texttt{texlive}, \texttt{git}, \texttt{rstudio-server} and more.
+ \item \texttt{opencpu-cache} -- Caching server. Not recommended for users. For internal use only.
 \end{itemize}
 
 \subsection{Getting an Ubuntu server}
 
-The recommended installation of \OpenCPU 1.5 requires Ubuntu version 14.04. Any flavour of Ubuntu will do, e.g. Ubuntu Desktop, Ubuntu Server, Kubuntu, Edubuntu, etc. The preferred way of running \OpenCPU is on a clean Ubuntu Server edition. A copy of the Ubuntu Server installation disc ISO can be obtained from the Ubuntu download pages at \url{http://www.ubuntu.com/download/server}.
+The recommended installation of \OpenCPU 2.0 requires Ubuntu version 16.04. Any flavour of Ubuntu will do, e.g. Ubuntu Desktop, Ubuntu Server, Kubuntu, Edubuntu, etc. The preferred way of running \OpenCPU is on a clean Ubuntu Server edition. A copy of the Ubuntu Server installation disc ISO can be obtained from the Ubuntu download pages at \url{http://www.ubuntu.com/download/server}.
 
-Another way to get started is by spinning up a pay-by-hour server instance on Amazon EC2. When using \OpenCPU on EC2, it is highly recommended to pick one of the \textbf{C3 compute optimized} instance types, for example \texttt{c3.large}. The C3 instance types run on an Ivy Bridge Processor and Solid State Disk, both of which will make \OpenCPU very happy. The Ubuntu team provides very nice ready-to-go daily updated preinstalled Ubuntu-Server images for EC2 at \url{http://cloud-images.ubuntu.com/trusty/current/}.
+Another way to get started is by spinning up a pay-by-hour server instance on Amazon EC2. When using \OpenCPU on EC2, it is highly recommended to pick one of the \textbf{compute optimized} instance types, for example \texttt{c3.large}. The Ubuntu team provides very nice ready-to-go daily updated preinstalled Ubuntu-Server images for EC2 at \url{http://cloud-images.ubuntu.com/trusty/current/}.
 
 Yet another possibility is to install Ubuntu Server on a virtual machine within another OS. On Linux we can use KVM, for Windows the free VMware Player or Oracle Virtualbox are available, and on OSX we can use Virtualbox or Parallels to run virtual machines. Regardless of the platform, it is good practice to run the \OpenCPU cloud server on a separate virtual machine rather than installing it directly in your application server. Isolating the \OpenCPU server within a virtual machine is nice from a security point of view and prevents \OpenCPU or \R from interfering with other software on your server. Furthermore hypervisors such as KVM provide nice control over hardware resources for guest machines. The \OpenCPU public demo servers run as virtual machines on a KVM hypervisor which has resulted in excellent performance, smooth upgrades and no major incidents for several years.
 
@@ -157,27 +157,17 @@ sudo apt-get upgrade
 To install \OpenCPU start by adding the repository to the system:
 
 \begin{codeblock}
-sudo add-apt-repository ppa:opencpu/opencpu-1.5 -y
+sudo add-apt-repository ppa:opencpu/opencpu-2.0 -y
 sudo apt-get update
 \end{codeblock}
 
 We can now go ahead and install the server:
 
 \begin{codeblock}
-sudo apt-get install opencpu
+sudo apt-get install opencpu-server
 \end{codeblock}
 
 Installation on a clean server might take a while because \R and Latex both have many dependencies. After installation is done, we should be able to open a browser and point it to the \texttt{/ocpu} path at server address e.g: \href{http://your.server.com/ocpu}{http(s)://your.server.com/ocpu}. If the welcome page shows up, the installation has succeeded. 
-
-\subsection{OpenCPU cache server}
-
-The \OpenCPU system also includes an optional cache server, which is a reverse proxy based on nginx. When we install \texttt{opencpu-cache} on the same host as \texttt{opencpu-server}, it automatically reroutes incoming traffic through the caching server.
-
-\begin{codeblock}
-sudo apt-get install opencpu-cache
-\end{codeblock}
-
-The \texttt{opencpu-cache} can also be installed on another host than \texttt{opencpu-server}. This is one way to setup a load-balancer. To make the cache server proxy to \OpenCPU servers other than localhost, configure the ocpu backend address in \texttt{/etc/nginx/opencpu.d/ocpu.conf}.
 
 Finally, to get install \OpenCPU together with a lot of other potentially useful things:
 
@@ -185,7 +175,7 @@ Finally, to get install \OpenCPU together with a lot of other potentially useful
 sudo apt-get install opencpu-full
 \end{codeblock}
 
-This package will install \texttt{opencpu-server}, \texttt{opencpu-cache}, \texttt{texlive}, \texttt{rstudio-server}, \texttt{git} and some more. Note that this takes is at least several GB of disk space on a fresh system.
+This package will install \texttt{opencpu-server}, \texttt{texlive}, \texttt{rstudio-server}, \texttt{git} and some more. Note that this takes is at least several GB of disk space on a fresh system.
 
 \subsection{Uninstall OpenCPU}
 
@@ -193,36 +183,25 @@ To uninstall either of the \OpenCPU packages:
 
 \begin{codeblock}
 sudo apt-get purge opencpu-server
-sudo apt-get purge opencpu-cache
 \end{codeblock}
 
-Alternatively, to remove all of \OpenCPU at once:
-
-\begin{codeblock}
-sudo apt-get purge opencpu-*
-\end{codeblock}
-  
- Removing the \texttt{opencpu} \emph{repository} from the system is done by deleting the repository file from the \texttt{/etc/apt/sources.list.d/} directory.  
+Removing the \texttt{opencpu} \emph{repository} from the system is done by deleting the repository file from the \texttt{/etc/apt/sources.list.d/} directory.  
   
 \section{Managing the OpenCPU cloud server}
 
-To control the \OpenCPU server:
+To enable \OpenCPU in Apache2 on Ubuntu:
 
 \begin{codeblock}
-sudo service opencpu start
-sudo service opencpu stop
-sudo service opencpu restart
+sudo a2ensite opencpu
+sudo apachectl restart
 \end{codeblock}
 
-This automatically enables/disables \OpenCPU in \apache and restarts the server. The cache server can be controlled separately (if \texttt{opencpu-cache} is installed):
+To disable \OpenCPU site in Apache2 on Ubuntu:
 
 \begin{codeblock}
-sudo service opencpu-cache start
-sudo service opencpu-cache stop
-sudo service opencpu-cache restart
+sudo a2dissite opencpu
+sudo apachectl restart
 \end{codeblock}
-
-This will flush the cache and restart \nginx. \textbf{Note that the cache server automatically sets up \texttt{iptables} to preroute incoming web traffic (80/443) through \nginx.} This is one of the reasons why it is recommended to run \OpenCPU on its own server.
 
 \subsection{Relevant log files}
 
@@ -230,7 +209,6 @@ When things are not working as expected, in most cases the problem is reported b
 
 \begin{codeblock}
 sudo tail /var/log/apache2/error.log
-sudo tail /var/log/nginx/error.log
 sudo tail /var/log/opencpu/apache_error.log
 \end{codeblock}
 
@@ -297,7 +275,7 @@ The \OpenCPU configuration file is written in \JSON and located at \texttt{/etc/
 To modify configurations, the administrator can edit this file or alternatively create a new file in the directory \texttt{server.conf.d}. Files in \texttt{/etc/opencpu/server.conf.d/} with a filename ending in \texttt{.conf} are automatically loaded by opencpu-server. These settings override settings in \texttt{/etc/opencpu/server.conf}. The server needs a restart for configurations to take effect:
 
 \begin{codeblock}
-sudo service opencpu restart
+sudo apachectl restart
 \end{codeblock}
 
 Make sure that all configuration files are formatted using valid \JSON at all times. Finally there is an additional optional configuration file that is only used for github authentication information at \texttt{/etc/opencpu/secret.conf}. This file is readable by the \OpenCPU system, but not by \OpenCPU users. It has three fields: \texttt{auth\_token}, \texttt{client\_id} and \texttt{client\_secret}. Setting a valid \Github ``application access token" makes it possible to use continuous integration for private \Github repositories. It also raises the hourly github \API limits from 100 to 5000 hits per hour. Currently this is only relevant for listing repositories through the \texttt{/ocpu/gist} and \texttt{/ocpu/github} \API.
@@ -465,77 +443,16 @@ curl server.com/ocpu/library/brew/example1.brew -d output=out.txt
 \subsection{Online package repositories}
 
  If the \OpenCPU cloud server has direct access to the internet, it can also provide access to packages and/or scripts from online repositories, such as \CRAN or \Github. This is convenient for development: package authors and users can test and use \OpenCPU apps without the need for an administrator to install packages on the server. However, note that the administrator can easily disable these features so they might not be available on every \OpenCPU server.
-
-When a client requests a package from an online repository which is not already installed on the server, \OpenCPU will attempt to install the package on the fly. For this reason, the first request might take quite a while. Also the request will fail if the package installation fails (for example due to missing dependencies). But once the package has been successfully installed, it will behave just as any other package on the server.
-
-For performance reasons, the current implementation updates packages from external no more than once per day. Hence, changes that were recently pushed to \Github might not immediately be reflected by the \OpenCPU server.
-
-\subsubsection*{CRAN}
-
-The \texttt{/ocpu/cran/:package/} \API interfaces to packages which are \emph{current} on \href{http://cran.r-project.org/}{CRAN}: 
-
-\indent \url{http://your.server.com/ocpu/cran/} \\
-\indent \url{http://your.server.com/ocpu/cran/plyr} \\
-\indent \url{http://your.server.com/ocpu/cran/plyr/R} \\
-\indent \url{http://your.server.com/ocpu/cran/plyr/R/ldply} \\
-\indent \url{http://your.server.com/ocpu/cran/plyr/man} \\
-\indent \url{http://your.server.com/ocpu/cran/plyr/man/ldply} \\
-\indent \url{http://your.server.com/ocpu/cran/plyr/man/ldply/html} \\
-\indent \url{http://your.server.com/ocpu/cran/plyr/man/ldply/pdf} 
-
+ 
 \subsubsection*{Github}
 
-The \texttt{/ocpu/github/:user/:package/} \API interfaces to \textbf{packages} which are on the \texttt{master} branch in a \Github user repository. For this to work, the github repository must contain the source \R package, and the repository name must be identical to the package name:
+The \texttt{/ocpu/apps/:user/:package/} \API interfaces to \textbf{packages} which are on the \texttt{master} branch in a \Github user repository. For this to work, the github repository must contain the source \R package, and the repository name must be identical to the package name:
 
-\indent \url{http://your.server.com/ocpu/github/hadley/} \\
-\indent \url{http://your.server.com/ocpu/github/hadley/plyr} \\
-\indent \url{http://your.server.com/ocpu/github/hadley/plyr/R} \\
-\indent \url{http://your.server.com/ocpu/github/hadley/plyr/R/ldply} \\
-\indent \url{http://your.server.com/ocpu/github/hadley/plyr/man/ldply} 
-
-\subsubsection*{Gist}
-
-The \texttt{/ocpu/gist/:user/:gistid/} \API interfaces to \textbf{files} (scripts, documents) in a repository from a certain Gist user. The \texttt{/ocpu/gist} \API does \textbf{not support \R packages}. Just files:
-
-\indent \url{http://your.server.com/ocpu/gist/hadley/} \\
-\indent \url{http://your.server.com/ocpu/gist/hadley/5721744} \\
-\indent \url{http://your.server.com/ocpu/gist/hadley/5721744/html.r}
-
- Execute a script or reproducible document straight from gist:
-
-\begin{codeblock}
-curl -X POST http://your.server.com/ocpu/gist/hadley/5721744/html.r
-\end{codeblock}
-
-
-\subsection{Test the caching server}
-
-An easy way to test the caching server is by calling the same function twice in a short time. If the cache server is working, output from both calls will be identical (and the second request returns much faster):
-
-\begin{codeblock}
-curl http://your.server.com/ocpu/library/stats/R/rnorm -d n=10
-curl http://your.server.com/ocpu/library/stats/R/rnorm -d n=10
-\end{codeblock}
-
-Try to disable the cache server and run the same experiment again:
-
-\begin{codeblock}
-sudo service opencpu-cache stop
-\end{codeblock}
-
-You should now see different responses. Afterwards, re-enable the caching server:
-
-\begin{codeblock}
-sudo service opencpu-cache start
-\end{codeblock}
-
-Another way to infer if the caching server is active is by looking at the \texttt{Server} response header:
-
-\begin{codeblock}
-curl -v http://your.server.com/ocpu/library/
-\end{codeblock}
-
-If the cache server is online the header will be \texttt{Server:nginx/1.x.x (Ubuntu)}. If the cache server is offline, it will be \texttt{Server:Apache/2.x.x (Ubuntu)}.
+\indent \url{http://your.server.com/ocpu/apps/jeroen/} \\
+\indent \url{http://your.server.com/ocpu/apps/jeroen/curl} \\
+\indent \url{http://your.server.com/ocpu/apps/jeroen/curl/R} \\
+\indent \url{http://your.server.com/ocpu/apps/jeroen/curl/R/curl_fetch_memory} \\
+\indent \url{http://your.server.com/ocpu/apps/jeroen/curl/man/curl_fetch_memory} 
 
 \begin{appendices}
 
