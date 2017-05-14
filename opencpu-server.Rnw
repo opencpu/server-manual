@@ -284,7 +284,7 @@ Make sure that all configuration files are formatted using valid \JSON at all ti
 
 Installation of \OpenCPU will automatically enable \HTTPS in your web server. Hence you should be able to access \OpenCPU via \texttt{https://your.server.com/ocpu}. By default, the server uses self-signed ``snake-oil" \texttt{SSL} certificates that are included with Ubuntu. These are convenient for development, but don't provide real security and will trigger the ``untrusted host" warning in most modern browsers. Once you go in production, it is recommended to replace these certificates with your own \texttt{SSL} certificates, signed by a certificate authority. 
 
- To set up \HTTPS when using \texttt{opencpu-server} \emph{without} \texttt{opencpu-cache}, the certificates need to be configured in \apache. This is done in \texttt{/etc/apache2/sites-available/default-ssl}. The file contains comments with further instructions. On the other hand, on a server which does have \texttt{opencpu-cache} installed, the certificates need to be configured in the following \nginx configuration file: \texttt{/etc/nginx/sites-available/opencpu}. After installing the certificates, restart \apache/\nginx for things to take effect.
+ To set up \HTTPS for \texttt{opencpu-server} the certificates need to be configured in \apache. This is done in \texttt{/etc/apache2/sites-available/default-ssl}. The file contains comments with further instructions. After configuring the certificates, restart \apache for things to take effect.
 
 \subsection{Customizing the security profile}
 \label{security}
