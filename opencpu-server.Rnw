@@ -43,7 +43,7 @@
 
 \title{The OpenCPU Server PDF Manual}
 
-\author{Version 2.1}
+\author{Version 2.2}
 \date{}
 
 \begin{document}
@@ -129,7 +129,7 @@ ocpu_start_app("rwebapps/markdownapp")
 
 \section{Installing the OpenCPU cloud server}
 
-The \OpenCPU cloud server version 2.1 runs on \textbf{Ubuntu 18.04 or 16.04}. The \OpenCPU system consists of a number of standard Ubuntu installation packages. These are:
+The \OpenCPU cloud server version 2.2 runs on \textbf{Ubuntu 20.04 or 18.04}. The \OpenCPU system consists of a number of standard Ubuntu installation packages. These are:
 
 \begin{itemize}
  \item \texttt{opencpu} -- Alias for \texttt{opencpu-server}.
@@ -140,7 +140,7 @@ The \OpenCPU cloud server version 2.1 runs on \textbf{Ubuntu 18.04 or 16.04}. Th
 
 \subsection{Getting an Ubuntu server}
 
-The recommended installation of \OpenCPU 2.1 requires Ubuntu version 18.04 or 16.04. Any flavour of Ubuntu will do, e.g. Ubuntu Desktop, Ubuntu Server, Kubuntu, Edubuntu, etc. The preferred way of running \OpenCPU is on a clean Ubuntu Server edition. A copy of the Ubuntu Server installation disc ISO can be obtained from the Ubuntu download pages at \url{http://www.ubuntu.com/download/server}.
+The recommended installation of \OpenCPU 2.2 requires Ubuntu version 20.04. Any flavour of Ubuntu will do, e.g. Ubuntu Desktop, Ubuntu Server, Kubuntu, Edubuntu, etc. The preferred way of running \OpenCPU is on a clean Ubuntu Server edition. A copy of the Ubuntu Server installation disc ISO can be obtained from the Ubuntu download pages at \url{http://www.ubuntu.com/download/server}.
 
 Another way to get started is by spinning up a pay-by-hour server instance on Amazon EC2. When using \OpenCPU on EC2, it is highly recommended to pick one of the \textbf{compute optimized} instance types, for example \texttt{c3.large}. The Ubuntu team provides very nice ready-to-go daily updated preinstalled Ubuntu-Server images for EC2 at \url{http://cloud-images.ubuntu.com/trusty/current/}.
 
@@ -157,7 +157,7 @@ sudo apt-get upgrade
 To install \OpenCPU start by adding the repository to the system:
 
 \begin{codeblock}
-sudo add-apt-repository ppa:opencpu/opencpu-2.1 -y
+sudo add-apt-repository ppa:opencpu/opencpu-2.2 -y
 sudo apt-get update
 \end{codeblock}
 
